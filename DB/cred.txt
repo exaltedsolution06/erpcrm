@@ -1,0 +1,2 @@
+SMTP credential - application\config\email.php
+Send email function is in - application\helpers\email_helper.php
