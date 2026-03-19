@@ -19,49 +19,66 @@ class Subscription extends MY_Controller {
     }
 
     public function create()
-    {
-        $data['page'] = 'subscription/form';
-        $this->load->view('layout/main',$data);
-    }
+	{
+		$this->form_validation->set_rules('title', 'Title', 'required|trim');
+		$this->form_validation->set_rules('price', 'Price', 'required|numeric');
+		$this->form_validation->set_rules('duration', 'Duration', 'required|trim');
 
-    public function store()
-    {
-        $data = [
-            'title' => $this->input->post('title'),
-            'price' => $this->input->post('price'),
-            'duration' => $this->input->post('duration'),
-            'description' => $this->input->post('description'),
-            'status' => 1
-        ];
+		if ($this->form_validation->run() == FALSE)
+		{
+			$data['page'] = 'subscription/form';
+			$this->load->view('layout/main',$data);
+		}
+		else
+		{
+			$data = [
+				'title' => $this->input->post('title', true),
+				'price' => $this->input->post('price', true),
+				'duration' => $this->input->post('duration', true),
+				'description' => $this->input->post('description', false),
+				'status' => 1
+			];
 
-        $this->subscription_model->insert($data);
+			$this->subscription_model->insert($data);
 
-        $this->session->set_flashdata('success', 'Subscription Added Successfully');
-		redirect('subscription');
-    }
+			$this->session->set_flashdata('success','Subscription Added Successfully');
+			redirect('subscription');
+		}
+	}
 
     public function edit($id)
-    {
-        $data['subscription'] = $this->subscription_model->get($id);
-        $data['page'] = 'subscription/form';
+	{
+		$subscription = $this->subscription_model->get($id);
 
-        $this->load->view('layout/main',$data);
-    }
+		if(!$subscription){
+			show_404();
+		}
 
-    public function update($id)
-    {
-        $data = [
-            'title' => $this->input->post('title'),
-            'price' => $this->input->post('price'),
-            'duration' => $this->input->post('duration'),
-            'description' => $this->input->post('description'),
-        ];
+		$this->form_validation->set_rules('title', 'Title', 'required|trim');
+		$this->form_validation->set_rules('price', 'Price', 'required|numeric');
+		$this->form_validation->set_rules('duration', 'Duration', 'required|trim');
 
-        $this->subscription_model->update($id,$data);
+		if ($this->form_validation->run() == FALSE)
+		{
+			$data['subscription'] = $subscription;
+			$data['page'] = 'subscription/form';
+			$this->load->view('layout/main',$data);
+		}
+		else
+		{
+			$data = [
+				'title' => $this->input->post('title', true),
+				'price' => $this->input->post('price', true),
+				'duration' => $this->input->post('duration', true),
+				'description' => $this->input->post('description', false),
+			];
 
-        $this->session->set_flashdata('success', 'Subscription Updated Successfully');
-        redirect('subscription');
-    }
+			$this->subscription_model->update($id,$data);
+
+			$this->session->set_flashdata('success','Subscription Updated Successfully');
+			redirect('subscription');
+		}
+	}
 
     public function delete()
 	{

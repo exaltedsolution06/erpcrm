@@ -19,69 +19,81 @@ class Domain extends MY_Controller {
     }
 
     public function create()
-    {
-        $data['page'] = 'domain/form';
-		
-        $data['script'] = 'domain/form_script';
-		
-        $this->load->view('layout/main',$data);
-    }
+	{
+		// validation rules
+		$this->form_validation->set_rules('domain_name', 'Domain Name', 'required|trim|valid_url');
+		$this->form_validation->set_rules('api_key', 'API Key', 'required|trim');
 
-    public function store()
-    {
-		$domain = $this->input->post('domain_name');
-        $api_key = $this->input->post('api_key');
-		
-        $data = [
-            'domain_name' => $domain,
-            'api_key' => $api_key,
-            'status' => 1
-        ];
+		if ($this->form_validation->run() == FALSE)
+		{
+			$data['page'] = 'domain/form';
+			$data['script'] = 'domain/form_script';
 
-        $this->domain_model->insert($data);
-		
-		/* -----------------------
-           CALL ERP API
-        ------------------------ */
-        $this->update_erp_api_key($domain,$api_key);
-
-        $this->session->set_flashdata('success', 'Domain Added Successfully');
-		redirect('api-domain');
-    }
-
-    public function edit($id)
-    {
-        $data['domain'] = $this->domain_model->get($id);
-        $data['page'] = 'domain/form';
-
-        $data['script'] = 'domain/form_script';
-		
-        $this->load->view('layout/main',$data);
-    }
-
-    public function update($id)
-    {
-		$domain = $this->input->post('domain_name');
-        $api_key = $this->input->post('api_key');
-		
-        $data = [
-            'domain_name' => $this->input->post('domain_name'),
-            'api_key' => $this->input->post('api_key'),
-        ];
-
-        $this->domain_model->update($id,$data);
-		
-		/* -----------------------
-           CALL SCHOOL API
-        ------------------------ */
-        $response = $this->update_erp_api_key($domain,$api_key);
-		if($response['status']){
-			$this->session->set_flashdata('success', $response['message']);
-		}else{
-			$this->session->set_flashdata('error', $response['message']);
+			$this->load->view('layout/main',$data);
 		}
-        redirect('api-domain');
-    }
+		else
+		{
+			$domain  = $this->input->post('domain_name', true);
+			$api_key = $this->input->post('api_key', true);
+
+			$data = [
+				'domain_name' => $domain,
+				'api_key'     => $api_key,
+				'status'      => 1
+			];
+
+			$this->domain_model->insert($data);
+
+			// API call
+			$this->update_erp_api_key($domain,$api_key);
+
+			$this->session->set_flashdata('success','Domain Added Successfully');
+			redirect('api-domain');
+		}
+	}
+	
+	public function edit($id)
+	{
+		$domainData = $this->domain_model->get($id);
+
+		if(!$domainData){
+			show_404();
+		}
+
+		$this->form_validation->set_rules('domain_name', 'Domain Name', 'required|trim|valid_url');
+		$this->form_validation->set_rules('api_key', 'API Key', 'required|trim');
+
+		if ($this->form_validation->run() == FALSE)
+		{
+			$data['domain'] = $domainData;
+			$data['page'] = 'domain/form';
+			$data['script'] = 'domain/form_script';
+
+			$this->load->view('layout/main',$data);
+		}
+		else
+		{
+			$domain  = $this->input->post('domain_name', true);
+			$api_key = $this->input->post('api_key', true);
+
+			$data = [
+				'domain_name' => $domain,
+				'api_key'     => $api_key,
+			];
+
+			$this->domain_model->update($id,$data);
+
+			$response = $this->update_erp_api_key($domain,$api_key);
+
+			if(isset($response['status']) && $response['status']){
+				$this->session->set_flashdata('success',$response['message']);
+			}else{
+				$this->session->set_flashdata('error',$response['message'] ?? 'API failed');
+			}
+
+			redirect('api-domain');
+		}
+	}
 
     public function delete()
 	{

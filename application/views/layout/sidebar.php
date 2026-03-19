@@ -6,17 +6,23 @@
 				<li class="menu-title"> 
 					<span>Main</span>
 				</li>
-				<li class="active"> 
-					<a href="<?= base_url('dashboard') ?>"><i class="la la-dashcube"></i> <span>Dashboard</span></a>
+				<?php 
+				$current_class = $this->router->fetch_class();
+				$current_method = $this->router->fetch_method();
+				// echo $current_class.'//'.$current_method;
+				// is_active(['current_class'],['current_method'])
+				?>
+				<li class="<?php echo is_active(['dashboard'],['index']) ?>"> 
+					<a href="<?php echo base_url('dashboard') ?>"><i class="la la-dashcube"></i> <span>Dashboard</span></a>
 				</li>
-				<li class="active"> 
-					<a href="<?= base_url('api-domain') ?>"><i class="la la-key"></i> <span>Domain Key</span></a>
+				<li class="<?php echo is_active(['domain'],['index','create','edit']) ?>"> 
+					<a href="<?php echo base_url('api-domain') ?>"><i class="la la-key"></i> <span>Domain Key</span></a>
 				</li>
-				<li class="active"> 
-					<a href="<?= base_url('settings') ?>"><i class="la la-cog"></i> <span>General Setting</span></a>
+				<li class="<?php echo is_active(['settings'],['index']) ?>"> 
+					<a href="<?php echo base_url('settings') ?>"><i class="la la-cog"></i> <span>General Setting</span></a>
 				</li>
-				<li class="active"> 
-					<a href="<?= base_url('subscription') ?>"><i class="la la-cubes"></i> <span>Manage Subscription</span></a>
+				<li class="<?php echo is_active(['subscription'],['index','create','edit']) ?>"> 
+					<a href="<?php echo base_url('subscription') ?>"><i class="la la-cubes"></i> <span>Manage Subscription</span></a>
 				</li>
 			</ul>
 			

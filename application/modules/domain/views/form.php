@@ -19,30 +19,36 @@
 		
 		<div class="row">
 			<div class="col-sm-12">
-				<form method="post" action="<?= isset($domain) ? base_url('domain/update/'.$domain->id) : base_url('domain/store') ?>">
-					<div class="row">
-						<div class="col-md-3">
-							<div class="input-block mb-3">
-								<label class="col-form-label">Domain Name</label>
-								<input type="text" name="domain_name" id="domain_name" class="form-control" placeholder="Domain Name" value="<?= isset($domain) ? $domain->domain_name : '' ?>" required>
+				<div class="card">
+					<div class="card-body">
+						<form method="post" action="<?= isset($domain) ? base_url('domain/edit/'.$domain->id) : base_url('domain/create') ?>">
+							<div class="row">
+								<div class="col-md-3">
+									<div class="input-block mb-3">
+										<label class="col-form-label">Domain Name <span class="text-danger">*</span></label>
+										<input type="text" name="domain_name" id="domain_name" class="form-control" placeholder="Domain Name" value="<?= isset($domain) ? $domain->domain_name : '' ?>" required>
+										<span class="text-danger"><?= form_error('price') ?></span>
+									</div>
+								</div>
+								<div class="col-md-7">
+									<div class="input-block mb-3">
+										<label class="col-form-label">API Key <span class="text-danger">*</span></label>
+										<input type="text" name="api_key" id="api_key" class="form-control" placeholder="API Key" value="<?= isset($domain) ? $domain->api_key : '' ?>" required>
+										<span class="text-danger"><?= form_error('price') ?></span>
+									</div>
+								</div>		
+								<div class="col-md-2">
+									<div class="input-block mb-3">
+										<button type="button" onclick="generateKey()" class="btn btn-success">Generate Key</button>
+									</div>
+								</div>					
 							</div>
-						</div>
-						<div class="col-md-7">
-							<div class="input-block mb-3">
-								<label class="col-form-label">API Key</label>
-								<input type="text" name="api_key" id="api_key" class="form-control" placeholder="API Key" value="<?= isset($domain) ? $domain->api_key : '' ?>" required>
+							<div class="text-end">
+								<button type="submit" class="btn btn-primary">Submit</button>
 							</div>
-						</div>		
-						<div class="col-md-2">
-							<div class="input-block mb-3">
-								<button type="button" onclick="generateKey()" class="btn btn-success">Generate Key</button>
-							</div>
-						</div>					
-					</div>
-					<div class="text-end">
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</div>
-				</form>		
+						</form>		
+					</div>			
+				</div>			
 			</div>			
 		</div>			
 	</div>					

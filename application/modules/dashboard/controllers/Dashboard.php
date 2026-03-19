@@ -10,5 +10,4 @@ class Dashboard extends MY_Controller {
         $this->load->view('layout/main',$data);
 
     }
-
 }

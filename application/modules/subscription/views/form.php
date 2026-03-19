@@ -19,39 +19,46 @@
 		
 		<div class="row">
 			<div class="col-sm-12">
-				<form method="post" action="<?= isset($subscription) ? base_url('subscription/update/'.$subscription->id) : base_url('subscription/store') ?>">
-					<div class="row">
-						<div class="col-md-4">
-							<div class="input-block mb-3">
-								<label class="col-form-label">Title</label>
-								<input type="text" name="title" class="form-control" value="<?= isset($subscription) ? $subscription->title : '' ?>" required>
+				<div class="card">
+					<div class="card-body">
+						<form method="post" action="<?= isset($subscription) ? base_url('subscription/edit/'.$subscription->id) : base_url('subscription/create') ?>">
+							<div class="row">
+								<div class="col-md-4">
+									<div class="input-block mb-3">
+										<label class="col-form-label">Title <span class="text-danger">*</span></label>
+										<input type="text" name="title" class="form-control" value="<?= isset($subscription) ? $subscription->title : '' ?>" required>
+										<span class="text-danger"><?= form_error('title') ?></span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-block mb-3">
+										<label class="col-form-label">Price <span class="text-danger">*</span></label>
+										<input type="number" name="price" class="form-control" value="<?= isset($subscription) ? $subscription->price : '' ?>" required>
+										<span class="text-danger"><?= form_error('price') ?></span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="input-block mb-3">
+										<label class="col-form-label">Duration <span class="text-danger">*</span></label>
+										<input type="text" name="duration" class="form-control" value="<?= isset($subscription) ? $subscription->duration : '' ?>" required>
+										<span class="text-danger"><?= form_error('duration') ?></span>
+									</div>
+								</div>	
+								<div class="col-md-12">
+									<div class="input-block mb-3">
+										<label class="col-form-label">Description</label>
+										<textarea id="editor1" name="description" placeholder="" type="text" class="form-control editor1" >
+											<?= isset($subscription) ? $subscription->description : '' ?>
+										</textarea>
+									</div>
+								</div>						
 							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="input-block mb-3">
-								<label class="col-form-label">Price</label>
-								<input type="number" name="price" class="form-control" value="<?= isset($subscription) ? $subscription->price : '' ?>" required>
+							<div class="text-end">
+								<button type="submit" class="btn btn-primary">Submit</button>
 							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="input-block mb-3">
-								<label class="col-form-label">Duration</label>
-								<input type="text" name="duration" class="form-control" value="<?= isset($subscription) ? $subscription->duration : '' ?>" required>
-							</div>
-						</div>	
-						<div class="col-md-12">
-							<div class="input-block mb-3">
-								<label class="col-form-label">Description</label>
-								<textarea id="editor1" name="description" placeholder="" type="text" class="form-control editor1" >
-                                    <?= isset($subscription) ? $subscription->description : '' ?>
-                                </textarea>
-							</div>
-						</div>						
-					</div>
-					<div class="text-end">
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</div>
-				</form>		
+						</form>		
+					</div>			
+				</div>			
 			</div>			
 		</div>			
 	</div>					
