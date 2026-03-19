@@ -15,7 +15,7 @@
 					</ul>
 				</div>
 				<div class="col-auto float-end ms-auto">
-					<a href="<?= base_url('subscription/create') ?>" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Subscription</a>
+					<a href="<?= base_url('subscription/create') ?>" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Subscription</a>
 				</div>
 			</div>
 		</div>

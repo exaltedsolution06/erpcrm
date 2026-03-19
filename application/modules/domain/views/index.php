@@ -15,7 +15,7 @@
 					</ul>
 				</div>
 				<div class="col-auto float-end ms-auto">
-					<a href="<?= base_url('api-domain/create') ?>" class="btn add-btn"><i class="fa-solid fa-plus"></i> Add Domain</a>
+					<a href="<?= base_url('api-domain/create') ?>" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Domain</a>
 				</div>
 			</div>
 		</div>
