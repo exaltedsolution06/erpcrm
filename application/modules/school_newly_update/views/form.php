@@ -33,14 +33,15 @@
 								<div class="col-md-6">
 									<div class="input-block mb-3">
 										<label class="col-form-label">Release date <span class="text-danger">*</span></label>
-										<input type="date" name="release_date" class="form-control" value="<?= isset($schoolnewly) ? date('d/m/Y', strtotime($schoolnewly->release_date)) : '' ?>">
+										<input type="date" name="release_date" class="form-control"
+value="<?= !empty($schoolnewly->release_date) ? date('Y-m-d', strtotime($schoolnewly->release_date)) : '' ?>">
 										<span class="text-danger"><?= form_error('release_date') ?></span>
 									</div>
 								</div>
 								<div class="col-md-12">
 									<div class="input-block mb-3">
 										<label class="col-form-label">Details <span class="text-danger">*</span></label>
-										<textarea  name="details" placeholder="Details" class="form-control" >
+										<textarea  name="details" placeholder="Details" class="form-control">
 											<?= isset($schoolnewly) ? $schoolnewly->details : '' ?>
 										</textarea>
 										<span class="text-danger"><?= form_error('details') ?></span>

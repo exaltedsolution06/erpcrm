@@ -37,11 +37,19 @@
 							</tr>
 						</thead>
 						<tbody>
-							<?php foreach($schoolnewly as $row){ ?>
+							<?php foreach($schoolnewly as $row)
+							{ 
+							  $dot = '';
+							  if(strlen($row->details) > 100)
+							  {
+								  $dot = '...';
+							  }
+							
+							?>
 							<tr>
 								<td><?= $row->id ?></td>
 								<td><?= $row->title ?></td>
-								<td style="width:200px;"><?= substr($row->details, 0, 60). '...' ?></td>
+								<td style="width:200px;"><?= substr($row->details, 0, 60). $dot ?></td>
 								<td><?= date('d/m/Y', strtotime($row->release_date)) ?></td>
 								<!--<td><?= $row->status ? 'Active':'Inactive' ?></td>-->
 								<td class="text-end">
